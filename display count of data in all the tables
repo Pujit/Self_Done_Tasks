@@ -1,0 +1,10 @@
+select
+       table_name,
+       to_number(
+         extractvalue(
+           xmltype(
+             dbms_xmlgen.getxml('select count(*) c ' ||
+                                ' from '||owner||'.'||table_name))
+           ,'/ROWSET/ROW/C')) count
+   from all_tables
+  where owner = 'OES';
